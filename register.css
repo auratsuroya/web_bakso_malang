@@ -1,0 +1,145 @@
+/* ==========================================================
+   REGISTER PAGE - PREMIUM GREEN & GOLD RESTO THEME
+   Bakso Malang Lestari 38
+========================================================== */
+
+:root {
+  --green-main: #0f3d2e;
+  --green-dark: #0a2b20;
+  --gold-premium: #d4af37;
+  --white-soft: #f1f1f1;
+}
+
+/* Background resto gelap premium */
+.login-bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: url('resto-bg.jpg') center/cover no-repeat;
+  filter: brightness(40%) blur(2px);
+  z-index: -2;
+}
+
+.login-bg::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(160deg, rgba(15,61,46,0.7), rgba(0,0,0,0.8));
+  z-index: -1;
+}
+
+/* Card kaca elegan */
+.login-card {
+  width: 420px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: var(--white-soft);
+  animation: fadeInUp .6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Title emas */
+.title-text {
+  color: var(--gold-premium);
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+}
+
+/* Form Input */
+.form-control {
+  background: rgba(255,255,255,0.16);
+  border: 1px solid rgba(255,255,255,0.35);
+  color: #fff;
+  border-radius: 14px;
+  padding: 12px 45px 12px 14px;
+  transition: 0.3s;
+}
+
+.form-control:focus {
+  border-color: var(--gold-premium);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+}
+
+.form-control::placeholder {
+  color: #ececec;
+}
+
+/* Password eye icon */
+.toggle-eye {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #e6e6e6;
+  transition: 0.3s;
+}
+
+.toggle-eye:hover {
+  color: var(--gold-premium);
+}
+
+/* Button emas */
+.btn-gold {
+  background: linear-gradient(135deg, #d4af37, #f7e99c);
+  border: none;
+  border-radius: 14px;
+  color: #0f3d2e;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 12px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  transition: 0.3s;
+}
+
+.btn-gold:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.45);
+}
+
+/* Gold Link */
+.text-gold {
+  color: var(--gold-premium) !important;
+  font-weight: bold;
+}
+
+.text-gold:hover {
+  color: #f7e99c !important;
+}
+
+/* Error & success message */
+#errorMsg {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+#successMsg {
+  font-size: 15px;
+  animation: fadeIn .6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Mobile Responsive */
+@media(max-width: 480px) {
+  .login-card {
+    width: 92%;
+    padding: 20px;
+  }
+}

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - Bakso Malang Lestari</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+  body { font-family: 'Arial', sans-serif; }
+  .sidebar { width: 220px; height: 100vh; position: fixed; background: #0f3d2e; color: #fff; }
+  .sidebar a { color: #fff; text-decoration: none; display: block; padding: 12px; }
+  .sidebar a.active, .sidebar a:hover { background: #0a2b20; }
+  .content { margin-left: 220px; padding: 20px; }
+  .table img { width: 60px; height: 60px; object-fit: cover; border-radius: 5px; }
+  .preview-img { max-width: 100px; margin-top: 10px; border-radius:5px; }
+  /* Modal tengah layar */
+  .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); justify-content:center; align-items:center; }
+  .modal.show { display:flex; animation: fadeIn 0.3s; }
+  @keyframes fadeIn { from {opacity:0} to {opacity:1} }
+  .drag-drop { padding:10px; border:2px dashed #aaa; text-align:center; cursor:pointer; border-radius:5px; }
+  .drag-drop.dragover { border-color:#28a745; background:#e6ffe6; }
+</style>
+</head>
+<body>
+
+<div class="sidebar d-flex flex-column">
+  <h4 class="text-center py-3">Admin Panel</h4>
+  <a href="#" class="active" data-tab="dashboard">Dashboard</a>
+  <a href="#" data-tab="orders">Pesanan</a>
+  <a href="#" data-tab="menu">Kelola Menu</a>
+  <a href="#">Logout</a>
+</div>
+
+<div class="content">
+  <!-- Dashboard -->
+  <div id="dashboard-tab">
+    <h2>Dashboard</h2>
+    <p>Selamat datang, Admin!</p>
+    <span class="badge bg-success me-2" id="countMakanan">Makanan: 0</span>
+    <span class="badge bg-info" id="countMinuman">Minuman: 0</span>
+  </div>
+
+  <!-- Orders -->
+  <div id="orders-tab" style="display:none;">
+    <h2>Daftar Pesanan</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr><th>No</th><th>Nama Pemesan</th><th>Item</th><th>Qty</th><th>Total</th><th>Status</th></tr>
+      </thead>
+      <tbody id="ordersTable"></tbody>
+    </table>
+  </div>
+
+  <!-- Menu -->
+  <div id="menu-tab" style="display:none;">
+    <h2>Kelola Menu</h2>
+    <div class="d-flex mb-3">
+      <button class="btn btn-success me-3" id="addMenuBtn">Tambah Menu</button>
+      <select class="form-select w-auto me-2" id="filterCategory">
+        <option value="">Semua Kategori</option>
+        <option value="makanan">Makanan</option>
+        <option value="minuman">Minuman</option>
+      </select>
+      <input type="text" class="form-control w-auto" id="searchMenu" placeholder="Cari menu...">
+    </div>
+    <table class="table table-bordered">
+      <thead>
+        <tr><th>No</th><th>Nama Menu</th><th>Kategori</th><th>Harga</th><th>Gambar</th><th>Aksi</th></tr>
+      </thead>
+      <tbody id="menuTable"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal Form -->
+<div class="modal" id="menuModal">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title">Tambah Menu</h5>
+        <button type="button" class="btn-close" id="closeModal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="menuForm">
+          <div class="mb-3">
+            <label class="form-label">Nama Menu</label>
+            <input type="text" class="form-control" id="menuName" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Kategori</label>
+            <select class="form-select" id="menuCategory">
+              <option value="makanan">Makanan</option>
+              <option value="minuman">Minuman</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Harga</label>
+            <input type="number" class="form-control" id="menuPrice" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Gambar</label>
+            <div class="drag-drop" id="dragDropDiv">Drop file disini atau klik</div>
+            <input type="file" class="form-control" id="menuImg" accept="image/*" style="display:none;">
+            <img id="previewImg" class="preview-img" style="display:none;">
+          </div>
+          <button type="submit" class="btn btn-success">Simpan</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Sidebar tab
+const tabs=document.querySelectorAll('.sidebar a[data-tab]');
+const dashboardTab=document.getElementById('dashboard-tab');
+const ordersTab=document.getElementById('orders-tab');
+const menuTab=document.getElementById('menu-tab');
+tabs.forEach(tab=>tab.addEventListener('click',e=>{
+  e.preventDefault();
+  tabs.forEach(t=>t.classList.remove('active'));
+  tab.classList.add('active');
+  dashboardTab.style.display='none';
+  ordersTab.style.display='none';
+  menuTab.style.display='none';
+  if(tab.dataset.tab==='dashboard') dashboardTab.style.display='block';
+  if(tab.dataset.tab==='orders') ordersTab.style.display='block';
+  if(tab.dataset.tab==='menu') menuTab.style.display='block';
+  renderMenuTable();
+}));
+
+// Orders dummy
+const orders=JSON.parse(localStorage.getItem('admin_orders')||'[]');
+const ordersTable=document.getElementById('ordersTable');
+function renderOrders(){
+  ordersTable.innerHTML='';
+  if(orders.length===0){
+    ordersTable.innerHTML='<tr><td colspan="6" class="text-center text-muted">Belum ada pesanan</td></tr>';
+    return;
+  }
+  orders.forEach((o,i)=>{
+    ordersTable.innerHTML+=`<tr>
+      <td>${i+1}</td>
+      <td>${o.name}</td>
+      <td>${o.item}</td>
+      <td>${o.qty}</td>
+      <td>Rp ${o.total.toLocaleString('id-ID')}</td>
+      <td>${o.status}</td>
+    </tr>`;
+  });
+}
+renderOrders();
+
+// Menu CRUD
+let menuData=JSON.parse(localStorage.getItem('admin_menu')||'[]');
+const menuTable=document.getElementById('menuTable');
+const menuModal=document.getElementById('menuModal');
+const addMenuBtn=document.getElementById('addMenuBtn');
+const closeModalBtn=document.getElementById('closeModal');
+const menuForm=document.getElementById('menuForm');
+const menuImgInput=document.getElementById('menuImg');
+const previewImg=document.getElementById('previewImg');
+const filterCategory=document.getElementById('filterCategory');
+const searchMenuInput=document.getElementById('searchMenu');
+const dragDropDiv=document.getElementById('dragDropDiv');
+let editIndex=null;
+
+// Modal
+function openModal(edit=false,index=null){
+  menuModal.style.display='flex';
+  if(edit && index!==null){
+    editIndex=index;
+    const m=menuData[index];
+    document.getElementById('menuName').value=m.name;
+    document.getElementById('menuCategory').value=m.category;
+    document.getElementById('menuPrice').value=m.price;
+    previewImg.src=m.img;
+    previewImg.style.display='block';
+    menuModal.querySelector('.modal-title').textContent='Edit Menu';
+  } else {
+    editIndex=null;
+    menuForm.reset();
+    previewImg.style.display='none';
+    menuModal.querySelector('.modal-title').textContent='Tambah Menu';
+  }
+}
+function closeModal(){ menuModal.style.display='none'; }
+addMenuBtn.onclick=()=>openModal();
+closeModalBtn.onclick=()=>closeModal();
+
+// Drag & Drop
+dragDropDiv.addEventListener('click',()=>menuImgInput.click());
+dragDropDiv.addEventListener('dragover', e=>{e.preventDefault(); dragDropDiv.classList.add('dragover');});
+dragDropDiv.addEventListener('dragleave', ()=>dragDropDiv.classList.remove('dragover'));
+dragDropDiv.addEventListener('drop', e=>{
+  e.preventDefault(); dragDropDiv.classList.remove('dragover');
+  if(e.dataTransfer.files[0]) handleImage(e.dataTransfer.files[0]);
+});
+menuImgInput.addEventListener('change',()=>{ if(menuImgInput.files[0]) handleImage(menuImgInput.files[0]); });
+function handleImage(file){
+  const reader=new FileReader();
+  reader.onload=()=>{ previewImg.src=reader.result; previewImg.style.display='block'; }
+  reader.readAsDataURL(file);
+}
+
+// Render table
+function renderMenuTable(){
+  const filter=filterCategory.value;
+  const search=searchMenuInput.value.toLowerCase();
+  const filtered=menuData.filter(m=>(filter?m.category===filter:true)&&(search?m.name.toLowerCase().includes(search):true));
+  menuTable.innerHTML='';
+  if(filtered.length===0){ menuTable.innerHTML='<tr><td colspan="6" class="text-center text-muted">Menu kosong</td></tr>'; }
+  filtered.forEach((m,i)=>{
+    menuTable.innerHTML+=`<tr>
+      <td>${i+1}</td>
+      <td>${m.name}</td>
+      <td>${m.category}</td>
+      <td>Rp ${m.price.toLocaleString('id-ID')}</td>
+      <td><img src="${m.img}" alt="${m.name}"></td>
+      <td>
+        <button class="btn btn-sm btn-warning" onclick="editMenu(${i})">Edit</button>
+        <button class="btn btn-sm btn-danger" onclick="deleteMenu(${i})">Hapus</button>
+      </td>
+    </tr>`;
+  });
+  renderSummary();
+}
+
+// Summary
+function renderSummary(){
+  const makanan=menuData.filter(m=>m.category==='makanan').length;
+  const minuman=menuData.filter(m=>m.category==='minuman').length;
+  document.getElementById('countMakanan').textContent=`Makanan: ${makanan}`;
+  document.getElementById('countMinuman').textContent=`Minuman: ${minuman}`;
+}
+
+// CRUD
+menuForm.addEventListener('submit',e=>{
+  e.preventDefault();
+  const name=document.getElementById('menuName').value;
+  const category=document.getElementById('menuCategory').value;
+  const price=Number(document.getElementById('menuPrice').value);
+  const img=previewImg.src||'';
+  if(editIndex!==null){ menuData[editIndex]={name,category,price,img}; } 
+  else { menuData.push({name,category,price,img}); }
+  localStorage.setItem('admin_menu',JSON.stringify(menuData));
+  renderMenuTable();
+  closeModal();
+});
+
+function editMenu(i){ openModal(true,i); }
+function deleteMenu(i){ if(confirm('Hapus menu ini?')){ menuData.splice(i,1); localStorage.setItem('admin_menu',JSON.stringify(menuData)); renderMenuTable(); } }
+
+filterCategory.addEventListener('change', renderMenuTable);
+searchMenuInput.addEventListener('input', renderMenuTable);
+
+renderMenuTable();
+renderOrders();
+</script>
+</body>
+</html>

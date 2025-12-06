@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - bakso malang lestari38</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+  <link rel="stylesheet" href="login.css" />
+</head>
+
+<body>
+  <div class="login-bg"></div>
+
+  <div class="login-wrapper d-flex justify-content-center align-items-center vh-100">
+    <div class="login-card p-4 rounded-4 shadow-lg">
+
+      <h2 class="text-center fw-bold title-text">Bakso Malang Lestari 38</h2>
+      <p class="text-center text-light mb-4">Silakan login untuk melanjutkan</p>
+
+      <form id="loginForm">
+  <div class="form-group position-relative">
+    <input type="text" id="username" class="form-control" placeholder="Username" required>
+  </div>
+
+  <div class="form-group position-relative mt-3">
+    <input type="password" id="password" class="form-control" placeholder="Password" required>
+    <i id="togglePassword" class="bi bi-eye toggle-eye"></i>
+  </div>
+
+  <div id="errorMsg" class="text-danger mt-2 d-none">Username atau password salah!</div>
+
+  <button type="submit" id="loginBtn" class="btn-login mt-4">
+    <span id="loginText">Login</span>
+    <span id="loginSpinner" class="spinner-border d-none"></span>
+  </button>
+</form>
+
+<!-- Toast Popup -->
+<div id="toast" class="toast-popup d-none">
+  <span id="toastIcon">✅</span>
+  <span id="toastMessage"></span>
+</div>
+
+      <p class="text-center text-light mt-3">
+        Belum punya akun?
+        <a href="register.html" class="text-gold fw-bold">Daftar</a>
+      </p>
+
+      <p id="errorMsg" class="text-danger text-center d-none">Username atau Password salah!</p>
+
+    </div>
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>
