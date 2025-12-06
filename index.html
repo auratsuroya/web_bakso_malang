@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bakso Malang Lestari 38</title>
+<link rel="icon" href="logo.png">
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-light" href="#">
+        Bakso Malang <span class="brand-accent">Lestari 38</span>
+      </a>
+
+      <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navCollapse">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link text-light" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#menu">Menu</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#about">Tentang</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#testimoni">Testimoni</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#location">Lokasi</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#gallery">Galeri</a></li>
+          <li class="nav-item"><a class="nav-link text-light" href="#contact">Kontak</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center ms-3">
+          <button id="darkToggle" class="btn btn-sm btn-light me-2">🌙</button>
+          <a href="logout.html" class="btn btn-outline-light me-2">Logout</a>
+          <button id="cartOpen" class="btn btn-danger position-relative">
+            <i class="bi bi-cart"></i>
+            <span id="cartCount" class="badge bg-dark position-absolute top-0 start-100 translate-middle">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="home" class="hero d-flex align-items-center">
+    <div class="container text-center text-light hero-content">
+      <h1 class="display-4 fw-bold">
+        Bakso Malang <span class="accent-text">Lestari 38</span>
+      </h1>
+      <p class="lead muted">Autentik • Hangat • Gurih • Selalu Fresh</p>
+
+      <div class="mt-4">
+        <a href="#menu" class="btn btn-accent btn-lg me-2 px-4">Lihat Menu</a>
+        <a href="#contact" class="btn btn-outline-light btn-lg px-4">Pesan Sekarang</a>
+      </div>
+    </div>
+  </header>
+
+  <section id="menu" class="menu-section py-5">
+  <div class="container text-center">
+
+    <h2 class="fw-bold mb-4 menu-title">Menu Favorit</h2>
+
+    <div class="menu-tabs">
+      <div class="menu-tab active" data-category="makanan">🍜 Makanan</div>
+      <div class="menu-tab" data-category="minuman">🥤 Minuman</div>
+    </div>
+
+    <div id="menuGrid" class="menu-grid mt-4"></div>
+
+  </div>
+</section>
+
+  <!-- ABOUT -->
+  <section id="about" class="about-section">
+  <div class="container">
+
+    <h2 class="section-title text-center mb-5">Tentang Kami</h2>
+
+    <div class="about-grid">
+      
+      <div class="about-card reveal">
+        <div class="about-img-wrapper">
+          <img src="team1.jpg" alt="Founder" class="about-img" />
+        </div>
+        <h3 class="about-name">Briyan Rizki Hermawan</h3>
+        <p class="about-role">Founder & CEO</p>
+        <p class="about-desc">
+          Kami berkomitmen menyajikan bakso Malang berkualitas tinggi dengan cita rasa autentik, kebersihan, dan pelayanan terbaik.
+        </p>
+      </div>
+
+      <div class="about-card reveal">
+        <div class="about-img-wrapper">
+          <img src="team2.jpg" alt="Staff" class="about-img" />
+        </div>
+        <h3 class="about-name">Tim Kuliner</h3>
+        <p class="about-role">Chef & Staff</p>
+        <p class="about-desc">
+          Tim kami selalu menjaga kualitas bahan, teknik masak, dan konsistensi rasa di setiap porsi yang kami sajikan.
+        </p>
+      </div>
+
+      <div class="about-card reveal">
+        <div class="about-img-wrapper">
+          <img src="team3.jpg" alt="Support" class="about-img" />
+        </div>
+        <h3 class="about-name">Customer Support</h3>
+        <p class="about-role">Pelayanan Pelanggan</p>
+        <p class="about-desc">
+          Kami siap melayani pertanyaan dan pesanan dengan cepat, ramah, informatif, dan professional.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  <!-- TESTIMONI -->
+  <section id="testimoni" class="testimoni-section">
+  <div class="container text-center">
+
+    <h3 class="section-title mb-5">Testimoni Pelanggan</h3>
+
+    <div class="testimoni-grid">
+
+      <div class="testimoni-card reveal">
+        <img src="avatar1.jpg" class="testimoni-avatar" alt="avatar">
+        <p class="testimoni-text">
+          “Baksonya enak banget! Kenyal, kuahnya gurih. Langganan terus.”
+        </p>
+        <div class="stars">
+          ★★★★☆
+        </div>
+        <div class="testimoni-name">Andi, Malang</div>
+      </div>
+
+      <div class="testimoni-card reveal">
+        <img src="avatar2.jpg" class="testimoni-avatar" alt="avatar">
+        <p class="testimoni-text">
+          “Pelayanan cepat, rasa mantap, harga ramah kantong!”
+        </p>
+        <div class="stars">
+          ★★★★★
+        </div>
+        <div class="testimoni-name">Siti, Dinoyo</div>
+      </div>
+
+      <div class="testimoni-card reveal">
+        <img src="avatar3.jpg" class="testimoni-avatar" alt="avatar">
+        <p class="testimoni-text">
+          “Tempat favorit keluarga. Bakso uratnya juara!”
+        </p>
+        <div class="stars">
+          ★★★★☆
+        </div>
+        <div class="testimoni-name">Budi, Sukun</div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+  <!-- MAP -->
+  <section id="location" class="py-5 bg-light">
+    <div class="container">
+      <div class="text-center mb-4">
+        <h3 class="fw-bold">Lokasi Kami</h3>
+        <p class="text-muted">Kunjungi gerai Bakso Malang Lestari 38</p>
+      </div>
+
+      <div class="map-wrapper mx-auto">
+        <iframe class="w-100" height="380"
+          src="https://www.google.com/maps?q=-6.296560494206279,106.73296788129704&z=16&output=embed"
+          loading="lazy" style="border:0;">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="py-5 gallery-section">
+  <div class="container text-center">
+    <h3 class="gallery-title fw-bold mb-4">Galeri</h3>
+    <p class="text-muted mb-5">
+      Lihat momen-momen menarik dan menu favorit pelanggan kami.
+    </p>
+
+    <div class="gallery-horizontal">
+      <div class="gallery-item">
+        <img src="galeri1.jpg" alt="Galeri 1" />
+        <div class="overlay"><span>Bakso Malang</span></div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="galeri2.jpg" alt="Galeri 2" />
+        <div class="overlay"><span>Mie Ayam Bakso</span></div>
+      </div>
+
+      <div class="gallery-item">
+        <img src="galeri3.jpg" alt="Galeri 3" />
+        <div class="overlay"><span>Es Jeruk Segar</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  <!-- CONTACT FORM -->
+  <section id="contact" class="py-5" style="background-color:#e6f4ea;">
+    <div class="container">
+      <h3 class="fw-bold text-center mb-4" style="color:#2e7d32;">Masukan & Saran Pelanggan</h3>
+
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <form id="feedbackForm">
+            <div class="mb-3">
+              <label for="name" class="form-label fw-bold">Nama</label>
+              <input type="text" id="name" class="form-control" placeholder="Nama Anda" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label fw-bold">Email</label>
+              <input type="email" id="email" class="form-control" placeholder="Email Anda" required />
+            </div>
+
+            <div class="mb-3">
+              <label for="message" class="form-label fw-bold">Masukan / Saran</label>
+              <textarea id="message" class="form-control" rows="5" placeholder="Tulis masukan Anda..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 fw-bold">Kirim Masukan</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CART SUMMARY ================================================== -->
+  <section class="py-5 reveal" style="background:#f9f9f9;">
+    <div class="container">
+
+      <h3 class="fw-bold mb-4 text-center" style="color:var(--green-dark);">Ringkasan Pesanan</h3>
+
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          
+          <div class="card p-3 shadow">
+
+            <h4 class="fw-bold mb-3">Pesanan Anda</h4>
+
+            <div id="cartList" class="py-3">Keranjang kosong...</div>
+
+            <div class="d-flex justify-content-between fw-bold mb-3">
+              <span>Total:</span>
+              <span id="cartTotal">Rp 0</span>
+            </div>
+
+            <button onclick="doCheckout()" class="btn-green w-100">
+              Checkout
+            </button>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+    </div>
+  </div>
+
+  <!-- FLOAT CART ================================================== -->
+  <div id="cartFloating" class="cart-floating">
+    <i class="bi bi-bag"></i>
+    <div class="count" id="floatCount">0</div>
+  </div>
+
+  <!-- SIDEBAR CART ================================================== -->
+  <aside id="cartSidebar" class="cart-sidebar">
+
+    <button id="cartClose" class="btn-close float-end"></button>
+
+    <h4 class="fw-bold mb-4">Keranjang Belanja</h4>
+
+    <div id="cartItems" class="mb-3">Keranjang kosong...</div>
+
+    <div class="fw-bold mb-3">
+      Total:
+      <span id="cartSidebarTotal">Rp 0</span>
+    </div>
+
+    <button onclick="doCheckout()" id="checkoutSidebar" class="btn-green w-100">
+      Checkout
+    </button>
+
+  </aside>
+
+  <footer class="footer bg-success text-white pt-5 pb-4 mt-5">
+  <div class="container">
+
+    <div class="row gy-4">
+
+      <!-- About -->
+      <div class="col-md-4">
+        <h5 class="fw-bold mb-3">Tentang Kami</h5>
+        <p class="text-light small mb-0" style="line-height:1.6;">
+          Bakso Malang Lestari 38 menghadirkan bakso dan minuman segar berkualitas tinggi.
+          Nikmati cita rasa asli Malang dengan harga terjangkau.
+        </p>
+      </div>
+
+      <!-- Social -->
+      <div class="col-md-4 text-center">
+        <h5 class="fw-bold mb-3">Ikuti Kami</h5>
+
+        <div class="d-flex justify-content-center gap-3">
+
+          <a href="https://www.instagram.com/bakso_malanglestari38" target="_blank" class="text-white">
+            <i class="bi bi-instagram fs-4"></i>
+          </a>
+
+          <a href="https://gofood.link/a/QYQNnQh" target="_blank" class="text-white">
+            <i class="bi bi-geo-alt fs-4"></i>
+          </a>
+
+          <a href="https://wa.me/628811307502" target="_blank" class="text-white">
+            <i class="bi bi-whatsapp fs-4"></i>
+          </a>
+
+          <a href="https://www.tiktok.com/@username" target="_blank" class="text-white">
+            <i class="bi bi-tiktok fs-4"></i>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div class="col-md-4">
+        <h5 class="fw-bold mb-3">Kontak & Alamat</h5>
+
+        <ul class="list-unstyled small mb-0" style="line-height:1.8;">
+          <li>📍 Gg. Sawo, RT.003/RW.001, Sawah Lama, Ciputat, Tangerang Selatan</li>
+          <li>☎️ 0881-1307-502</li>
+          <li>📧 info@baksolestari38.com</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <hr class="mt-4 mb-3" style="opacity:.15;">
+
+    <div class="text-center small">
+      © <span id="year"></span> Bakso Malang Lestari 38. All Rights Reserved.
+    </div>
+
+  </div>
+</footer>
+
+
+  <!-- JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
